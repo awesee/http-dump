@@ -2,12 +2,20 @@ package main
 
 import (
 	"encoding/json"
+	"flag"
 	"fmt"
 	"io"
 	"log"
 	"net/http"
 	"net/http/httputil"
 )
+
+var port uint
+
+func init() {
+	flag.UintVar(&port, "port", 8090, "TCP address for the server to listen on")
+	flag.Parse()
+}
 
 func main() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
@@ -40,5 +48,7 @@ func main() {
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		_, _ = w.Write(data)
 	})
-	log.Println(http.ListenAndServe(":8090", nil))
+	addr := fmt.Sprintf(":%d", port)
+	fmt.Printf("http://127.0.0.1%s\n", addr)
+	log.Println(http.ListenAndServe(addr, nil))
 }
