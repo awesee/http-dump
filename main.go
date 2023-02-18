@@ -29,7 +29,7 @@ func main() {
 			log.Println(err)
 		}
 		_ = r.ParseForm()
-		data, err = json.MarshalIndent(map[string]interface{}{
+		data, err = json.MarshalIndent(map[string]any{
 			"Method":     r.Method,
 			"URL":        r.URL.String(),
 			"Proto":      r.Proto,
